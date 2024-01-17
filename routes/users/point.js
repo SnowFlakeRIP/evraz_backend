@@ -19,7 +19,7 @@ module.exports = function (fastify, opts, next) {
                         type: 'string',
                     },
                 },
-                required:   [ 'userName' ],
+                required:   [ 'userEmail' ],
             },
         },
         async handler(request, reply) {

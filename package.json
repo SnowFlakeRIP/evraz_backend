@@ -4,7 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "migrate": "node-pg-migrate up"
   },
   "dependencies": {
     "@fastify/autoload": "5.7.1",
