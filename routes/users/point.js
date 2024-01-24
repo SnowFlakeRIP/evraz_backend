@@ -18,8 +18,7 @@ module.exports = function (fastify, opts, next) {
                     userPhone:    {
                         type: 'string',
                     },
-                },
-                required:   [ 'userEmail' ],
+                }
             },
         },
         async handler(request, reply) {

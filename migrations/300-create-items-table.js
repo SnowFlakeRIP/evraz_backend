@@ -1,39 +1,37 @@
-/* eslint-disable camelcase */
-
 exports.shorthands = undefined;
 
 exports.up = pgm => {
-    pgm.createTable('users', {
-        userId:             {
+    pgm.createTable('items', {
+        itemId:             {
             type:       'bigserial',
             primaryKey: true,
         },
-        userEmail:          {
-            type:    'varchar(250)',
+        itemName:          {
+            type:    'varchar(500)',
             unique:  true,
             comment: 'Почта пользователя',
         },
-        userPassword:       {
-            type:    'varchar(250)',
+        itemPrice:       {
+            type:    'numeric(30,2)',
             comment: 'Пароль пользователя',
         },
-        userPhone:          {
-            type:    'varchar(20)',
+        itemCount:          {
+            type:    'int',
             unique:  true,
             comment: 'Телефон пользователя',
         },
-        userTelegramChatId: {
-            type:    'varchar(50)',
+        itemSale: {
+            type:    'numeric(30,2)',
             unique:  true,
             comment: 'telegram chat id',
         },
-        createDate:         {
-            type:    'timestamp with time zone',
-            default: pgm.func('now()'),
+        itemMeta:         {
+            type:    'jsonb',
         },
-        updateDate:         {
-            type:    'timestamp with time zone',
-            default: pgm.func('now()'),
+        itemPesc:         {
+            type:    'varchar(200)',
+            unique:  true,
+            comment: 'telegram chat id',
         },
     }, {
         ifNotExists: true,

@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs')
 const { pool } = require('../../dependencies');
 
 async function createUser(object) {
@@ -22,16 +23,30 @@ async function createUser(object) {
             data.message = 'Пользователь с такой почтой уже зарегистрирован'
             return data
         }
+        const password = await bcrypt.hashSync(object.userPassword, 10);
+        const createUser = await client.query(`INSERT INTO users ("userPhone", "userEmail", "userPassword")
+                                               VALUES ($1, $2, $3)
+                                               RETURNING "userId", "userPassword"`,
+            [
+                object.userPhone,
+                object.userEmail,
+                password
+            ]
+        );
         
-        // const user = await client.query(`INSERT INTO users ()
-        //                                  VALUES ($1, $2, $3)`,
-        //     [
-        //         object.userName,
-        //         object.userLastName,
-        //         object.userPhone,
-        //     ],
-        // );
-        // console.log(user);
+        if (createUser.rowCount === 0 || createUser.rows.length === 0) {
+            console.log(`${ funcName }: Запрос на создание пользователя не выполнен`);
+            
+            data.message = 'Запрос на создание пользователя не выполнен';
+            return data;
+        }
+        
+        console.log(createUser);
+        
+        // const userId = createUser.rows[0].userId
+        // const userPassword = createUser.rows[0].userPassword
+        
+        const { userId, userPassword } = createUser.rows[0]
     }
     catch (err) {
         console.log(`${ funcName }: CATCH ERROR`);
